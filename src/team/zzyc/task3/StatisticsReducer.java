@@ -13,7 +13,7 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.output.MultipleOutputs;
 
-// 输入: (url, time n)
+// 输入: (url, time1 n1;time2 n2;...)
 public class StatisticsReducer extends Reducer<Text, Text, Text, Text> {
 	
 	private MultipleOutputs<Text, Text>mos;
@@ -26,14 +26,16 @@ public class StatisticsReducer extends Reducer<Text, Text, Text, Text> {
 		// 整合过程
 		Hashtable<String, Integer> map=new Hashtable<>();
 		for (Text val : values) {
-			String s=val.toString();
-			int index=s.indexOf(' ');
-			String time=s.substring(0,index);
-			int n=Integer.parseInt(s.substring(index+1));
-			if(map.containsKey(time))
-				map.put(time, map.get(time)+n);
-			else
-				map.put(time,n);
+			String[] split=val.toString().split(";");
+			for(String s:split){
+				int index=s.indexOf(' ');
+				String time=s.substring(0,index);
+				int n=Integer.parseInt(s.substring(index+1));
+				if(map.containsKey(time))
+					map.put(time, map.get(time)+n);
+				else
+					map.put(time,n);
+			}
 		}
 		
 		// 对哈希表排序

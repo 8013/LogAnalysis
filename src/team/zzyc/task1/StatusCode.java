@@ -39,6 +39,7 @@ public class StatusCode {
 		Configuration conf=new Configuration();
 		Job job=Job.getInstance(conf, "StatusCode");
 		
+		job.setJarByClass(StatusCode.class);
 		job.setMapperClass(StatisticsMapper.class);
 		job.setMapOutputKeyClass(Text.class);
 		job.setMapOutputValueClass(Text.class);

@@ -1,4 +1,4 @@
-package src.team.zzyc.task2;
+package team.zzyc.task2;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

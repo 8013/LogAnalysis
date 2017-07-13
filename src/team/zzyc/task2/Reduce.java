@@ -1,4 +1,4 @@
-package src.team.zzyc.task2;
+package team.zzyc.task2;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -37,7 +37,6 @@ public class Reduce extends Reducer<Text,Text,Text,Text>{
 		mos.write(new Text(key.toString()), new Text(""+sum), key.toString());
 		Set<String> keyset=map.keySet();
 		for(String k:keyset){
-			System.out.println(k+":"+map.get(k));
 			mos.write(new Text(k), new Text((map.get(k)).toString()), key.toString());
 		}
 	}

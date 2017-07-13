@@ -1,4 +1,4 @@
-package src.team.zzyc.task2;
+package team.zzyc.task2;
 
 import java.net.URI;
 

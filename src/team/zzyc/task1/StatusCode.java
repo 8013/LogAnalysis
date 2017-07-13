@@ -37,6 +37,7 @@ public class StatusCode {
 		path=output+"/1.txt";
 		
 		Configuration conf=new Configuration();
+		conf.set("path", path);
 		Job job=Job.getInstance(conf, "StatusCode");
 		
 		job.setJarByClass(StatusCode.class);

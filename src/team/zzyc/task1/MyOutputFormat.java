@@ -18,8 +18,8 @@ public class MyOutputFormat extends FileOutputFormat<Text, Text> {
 			throws IOException, InterruptedException {
 		
 		//自定义输出路径及文件名
-		FileSystem fs=FileSystem.get(URI.create(StatusCode.path), job.getConfiguration());
-        final FSDataOutputStream out = fs.create(new Path(StatusCode.path));  
+		FileSystem fs=FileSystem.get(URI.create(job.getConfiguration().get("path")), job.getConfiguration());
+        final FSDataOutputStream out = fs.create(new Path(job.getConfiguration().get("path")));  
         
         RecordWriter<Text, Text> recordWriter=new RecordWriter<Text, Text>() {
 			@Override

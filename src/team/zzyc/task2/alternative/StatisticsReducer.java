@@ -1,6 +1,7 @@
 package team.zzyc.task2.alternative;
 
 import java.io.IOException;
+import java.util.Hashtable;
 
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
@@ -11,12 +12,19 @@ import org.apache.hadoop.mapreduce.lib.output.MultipleOutputs;
 public class StatisticsReducer extends Reducer<Text, IntWritable, Text, Text> {
 	
 	private MultipleOutputs<Text, Text>mos;
+	private Hashtable<String, String> num2ip;
 	static int[] num;
 	static String currentIP=" ";
 	
 	protected void setup(Context context){
 		mos=new MultipleOutputs<>(context);
 		num=new int[24];
+
+		String []ips=context.getConfiguration().get("ip").split(" ");
+		num2ip=new Hashtable<>();
+		for(String ip:ips){
+			num2ip.put(num2ip.size()+"", ip);
+		}
 	}
 	
 	public void reduce(Text _key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
@@ -37,7 +45,7 @@ public class StatisticsReducer extends Reducer<Text, IntWritable, Text, Text> {
 				total_n+=num[i];
 			}
 			
-			mos.write(new Text(currentIP), new Text(total_n+"\n"+str), currentIP+".txt");			
+			mos.write(new Text(num2ip.get(currentIP)), new Text(total_n+"\n"+str), num2ip.get(currentIP)+".txt");			
 			num=new int[24];
 		}
 		currentIP=ip;
@@ -52,7 +60,7 @@ public class StatisticsReducer extends Reducer<Text, IntWritable, Text, Text> {
 			total_n+=num[i];
 		}
 		
-		mos.write(new Text(currentIP), new Text(total_n+"\n"+str), currentIP+".txt");			
+		mos.write(new Text(num2ip.get(currentIP)), new Text(total_n+"\n"+str), num2ip.get(currentIP)+".txt");			
 		mos.close();
 	}
 	

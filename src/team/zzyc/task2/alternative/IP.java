@@ -1,7 +1,9 @@
 package team.zzyc.task2.alternative;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
+import java.util.Scanner;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileStatus;
@@ -21,8 +23,17 @@ public class IP {
 	public static void run(String input, String output) throws IOException, ClassNotFoundException, InterruptedException{
 		
 		Configuration conf=new Configuration();
-		Job job=Job.getInstance(conf,"IP");
 		
+		Scanner in=new Scanner(new File("res/ip.txt"));
+		String str="";
+		while(in.hasNextLine()){
+			str+=in.nextLine()+" ";
+		}
+		in.close();
+		conf.set("ip", str);
+		
+		Job job=Job.getInstance(conf,"IP");
+
 		job.setJarByClass(IP.class);
 		job.setMapperClass(StatisticsMapper.class);
 		job.setMapOutputKeyClass(Text.class);
@@ -51,5 +62,5 @@ public class IP {
         	hdfs.rename(f.getPath(), new Path(f.getPath().toString().replaceAll("-r-00000", "")));
         }
 	}
-	
+		
 }

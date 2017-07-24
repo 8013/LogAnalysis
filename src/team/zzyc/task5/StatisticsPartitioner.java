@@ -1,4 +1,4 @@
-package team.zzyc.task5;
+package src.team.zzyc.task5;
 
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.lib.partition.HashPartitioner;

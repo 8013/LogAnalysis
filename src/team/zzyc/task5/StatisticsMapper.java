@@ -1,4 +1,4 @@
-package team.zzyc.task5;
+package src.team.zzyc.task5;
 
 import java.io.IOException;
 
